@@ -79,11 +79,10 @@ const Calendar = () => {
       <>
          <div className="content-container">
             <div className="title">
-               <h3>Schedule Title</h3>
+               <h3>{ `{ Schedule Title }` }</h3>
                <p>Hackathon 2022</p>
                <span></span>
             </div>
-            <button onClick={handelSendData}>Send</button>
             <div className="action">
                <span>No chosen file</span>
                <label className="btn-import" htmlFor="import">
@@ -96,7 +95,8 @@ const Calendar = () => {
                   id="import"
                   style={{ display: "none" }}
                />
-               <input type="button" name="export" value="Export *.csv" />
+               <button className="sendData" onClick={handelSendData}>Send {`${">>"}`}</button>
+               {/* <input type="button" name="export" value="Export *.csv" /> */}
             </div>
             <div className="timetable">
                <div className="week-names">
