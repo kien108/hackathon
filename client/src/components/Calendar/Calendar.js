@@ -1,6 +1,7 @@
 import React from "react";
 import "./calendar.scss";
 import { useState, useEffect } from "react";
+import postApi from "../../apis/post";
 
 let $ = document.querySelector.bind(document);
 let $$ = document.querySelectorAll.bind(document);
@@ -12,14 +13,23 @@ const Calendar = () => {
    const [isHighlighted, setIsHighlighted] = useState(false);
    const [currentCol, setCurrentCol] = useState(null);
    const [schedual, setSchedual] = useState([]);
+   const [fileImport, setFileImport] = useState(null);
 
+   const makeColorCell = (from, to) => {
+      const listCol = $$(`[data-col=${currentCol}]`);
+      for (let i = from; i < to; i++) {
+         listCol[i].classList.add("cell--active");
+      }
+   };
    useEffect(() => {
       const listCol = $$(".content .cell");
 
       listCol.forEach((col) => {
          col.onmousedown = () => {
             setIsMouseDown(true);
-            setTimeStart(col.getAttribute("data-row"));
+            if (!timeStart) {
+               setTimeStart(col.getAttribute("data-row"));
+            }
             setCurrentCol(col.getAttribute("data-col"));
             col.classList.toggle("cell--active");
             setIsHighlighted(true);
@@ -33,18 +43,38 @@ const Calendar = () => {
             }
          };
 
-         col.onmouseup = () => {
+         col.onmouseup = (e) => {
             setIsMouseDown(false);
             const newLessons = {
                day: currentCol,
-               lessons: `${timeStart}-${col.getAttribute("data-row")}`,
+               lessons: `${timeStart}-${e.target.getAttribute("data-row")}`,
             };
+            makeColorCell(timeStart, col.getAttribute("data-row"));
             setSchedual([...schedual, newLessons]);
+            setTimeStart(null);
          };
       });
    });
 
-   console.log(schedual);
+   // const handelImport = () => {
+   //    const fileImport = $("#import").files[0];
+   //    console.log(fileImport);
+   // };
+   const handelSendData = () => {
+      var formData = new FormData();
+      formData.append("file", fileImport);
+      formData.append("time", schedual);
+
+      console.log(formData);
+      try {
+         let res = postApi.send(formData);
+
+         console.log(res);
+      } catch (error) {
+         console.log(error.message);
+      }
+   };
+   // console.log(schedual);
    return (
       <>
          <div className="content-container">
@@ -53,12 +83,14 @@ const Calendar = () => {
                <p>Hackathon 2022</p>
                <span></span>
             </div>
+            <button onClick={handelSendData}>Send</button>
             <div className="action">
                <span>No chosen file</span>
-               <label class="btn-import" htmlFor="import">
+               <label className="btn-import" htmlFor="import">
                   Import *.csv
                </label>
                <input
+                  onChange={(e) => setFileImport(e.target.files[0])}
                   type="file"
                   name="import"
                   id="import"
