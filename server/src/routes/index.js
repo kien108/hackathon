@@ -1,5 +1,5 @@
-
+const controller = require('../controllers/main.controller');
 
 module.exports = (app) => {
-	app.use('/api/v1/request', ergiuwsvdnodsoindaiusvdurvdzuskb);
+	app.use('/api/request', controller.request);
 };
