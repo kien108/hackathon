@@ -1,0 +1,68 @@
+.document-container {
+   position: relative;
+   width: 100%;
+   margin-top: 100px;
+   .banner {
+      position: inherit;
+      width: 100%;
+      padding: 20%;
+      background: url("../../assets/imgs/banner.jpg") top center/cover no-repeat;
+   }
+   .content {
+      position: relative;
+      width: 100%;
+      padding: 20px 100px;
+      padding-bottom: 200px;
+      text-align: left;
+      line-height: 25px;
+      .title {
+         font-size: 3rem;
+         font-weight: 300;
+         margin: 20px 0;
+      }
+      p {
+         font-size: 2rem;
+      }
+      img {
+         width: 100%;
+         margin: 20px 0;
+         display: block;
+         border-radius: 20px;
+      }
+      a,
+      b {
+         font-weight: 600 !important;
+      }
+      .intro {
+         margin-bottom: 40px;
+         .title {
+            font-weight: 600;
+         }
+         p:last-child {
+            font-size: 1.5rem;
+            font-weight: 250;
+            margin-top: 15px;
+         }
+      }
+      .guide {
+         letter-spacing: 1px;
+         font-size: 1.7rem;
+         .step {
+            margin-bottom: 35px;
+         }
+         .title span {
+            display: inline-block;
+            width: 40px;
+            padding: 5px 0;
+            text-align: center;
+            background: #00a27c;
+            font-weight: 600;
+            border-radius: 25px;
+            color: #fff;
+         }
+         p {
+            font-size: 1.5rem;
+         }
+      }
+   }
+}
