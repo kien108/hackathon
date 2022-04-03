@@ -59,11 +59,30 @@ class Population {
 		result.chromosomes = newPopulation;
 		return result;
 	}
+	mutation() {
+		let ratio = 0.1;
+		for (let chromosome of this.chromosomes)
+			for (let gene of chromosome.genes) {
+				if (Math.random() > ratio)
+					continue;
+				
+				let rand = this.#random(this.subjects.length);
+				let subject = this.subjects[rand];
+
+				let teacher = chromosome.find(value => value.subject === subject)?.teacher;
+				if (!teacher) {
+					rand = this.#random(this.subjectData[subject].giaoVien.length);
+					teacher = this.subjectData[subject].giaoVien[rand];
+				}
+				gene.subject = subject;
+				gene.teacher = teacher;
+			}
+	}
 	// Private methods
 	#randomTeacherEachSubject() {
 		let temp = {};
 		for (let subject in this.subjectData) {
-			let rand = Math.floor(Math.random() * this.subjectData[subject].giaoVien.length);
+			let rand = this.#random(this.subjectData[subject].giaoVien.length);
 			temp[subject] = this.subjectData[subject].giaoVien[rand];
 		}
 		return temp;
