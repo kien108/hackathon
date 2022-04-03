@@ -9,7 +9,6 @@ class Population {
 		this.subjectData = data;
 		this.numberOfClass = numberOfClass;
 		this.time = time;
-		this.fitness = [];
 	}
 	at(index) {
 		return this.chromosomes[index];
@@ -21,7 +20,7 @@ class Population {
 			throw new Error("Chromosome error");
 	}
 	init() {
-		let totalLessonInWeek = Object.values(this.subjectData).reduce((pre, cur) => pre + cur.soTiet, 0);
+		let totalLessonInWeek = Object.values(this.subjectData).reduce((pre, cur) => pre + cur.soTietMonHoc, 0);
 
 		for (let iChromosome = 0; iChromosome < NUMBER_OF_CHROMOSOME; iChromosome++) {
 			let chromosome = new Chromosome();
@@ -32,10 +31,12 @@ class Population {
 					let rand = this.#random(this.subjects.length);
 					let subject = this.subjects[rand];
 					let teacher = subjectWithSingleTeacher[subject];
+					console.log({indexClass, day, order, subject, teacher});
 					chromosome.add(new Gene(indexClass, day, order, subject, teacher));
 				}
 			this.chromosomes.push(chromosome);
 		}
+		console.log(this.chromosomes);
 	}
 	getFitnesses() {
 		return this.chromosomes.map(chromosome => chromosome.fitness(this.numberOfClass, this.subjectData));

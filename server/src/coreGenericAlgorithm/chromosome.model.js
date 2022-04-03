@@ -24,7 +24,7 @@ class Chromosome {
             for (let subject in subjectData) {
                 // Du so luong tiet moi mon
                 let countLesson = classes[i].filter(lesson => lesson.subject === subject);
-                if (countLesson.length !== subjectData[subject].soTiet)
+                if (countLesson.length !== subjectData[subject].soTietMonHoc)
                     score -= 500;
                 // Giao vien day so lop deu nhau
                 let nClassOfTeacher = numberOfClass / subjectData[subject].giaoVien.length;
@@ -41,7 +41,7 @@ class Chromosome {
                             score -= 100;
                     }
                     else {
-                        if (count === Math.floor(nClassOfTeacher) || count === Math.ceil(nClassTeacher))
+                        if (count === Math.floor(nClassOfTeacher) || count === Math.ceil(nClassOfTeacher))
                             score -= 100;
                     }
 

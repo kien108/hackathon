@@ -1,6 +1,6 @@
 const csv = require("csv-parser");
 const fs = require("fs");
-
+const GA = require("../coreGenericAlgorithm");
 const results = [];
 
 module.exports = {
@@ -25,7 +25,6 @@ module.exports = {
                         .map((gv) => gv.trim()),
                   };
                });
-               console.log(dataFromCsv);
                // xoá file csv
                fs.unlinkSync("./uploads/file.csv");
             });
@@ -45,9 +44,51 @@ module.exports = {
                convertedTime.push(tempObj);
             }
          });
-         console.log(convertedTime);
+         
+         const data = {
+            'Toan': {
+               soTietMonHoc: 4,
+               giaoVien: ['Vinh', 'Nam']
+            },
+            'Van': {
+               soTietMonHoc: 4,
+               giaoVien: ['Kien', 'Tuan']
+            }
+         };
+         const time = [
+            { day: 'mon', order: 1 },
+            { day: 'mon', order: 2 },
+            { day: 'mon', order: 3 },
+            { day: 'mon', order: 4 },
+            { day: 'tue', order: 1 },
+            { day: 'tue', order: 2 },
+            { day: 'tue', order: 3 },
+            { day: 'tue', order: 4 },
+         ]
+         // let schedule = GA.generateSchedule(dataFromCsv, 1, convertedTime);
+         let schedule = GA.generateSchedule(data, 1, time);
+         res.json(schedule);
+         // convert theo y Kien
 
-         res.status(200).json({ status: "OK", message: "Successful" });
+         let result = {
+            classroom: 0,
+            schedule: ['mon', 'tue', 'web', 'thu', 'fri', 'sat'].map(day => {
+               return {
+                  day, 
+                  subjects: schedule.filter(lesson => {
+                     return {
+                        name: lesson.subject,
+                        teacher: lesson.teacher, 
+                        start: lesson.order,
+                        end: lesson.order,
+                     };
+                  })
+               };
+            })
+         };
+         res.status(200).json(result);
+
+         // res.status(200).json({ status: "OK", message: "Successful" });
       } catch (err) {
          console.log(err.message);
          res.status(500).json({ status: "Error", message: "Error at server" });
