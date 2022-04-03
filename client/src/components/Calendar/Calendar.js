@@ -56,14 +56,10 @@ const Calendar = () => {
       });
    });
 
-   // const handelImport = () => {
-   //    const fileImport = $("#import").files[0];
-   //    console.log(fileImport);
-   // };
    const handelSendData = () => {
       var formData = new FormData();
       formData.append("file", fileImport);
-      formData.append("time", schedual);
+      formData.append("time", JSON.stringify(schedual));
 
       console.log(formData);
       try {
@@ -74,16 +70,14 @@ const Calendar = () => {
          console.log(error.message);
       }
    };
-   // console.log(schedual);
    return (
       <>
          <div className="content-container">
             <div className="title">
-               <h3>Schedule Title</h3>
+               <h3>Schedule</h3>
                <p>Hackathon 2022</p>
                <span></span>
             </div>
-            <button onClick={handelSendData}>Send</button>
             <div className="action">
                <span>No chosen file</span>
                <label className="btn-import" htmlFor="import">
@@ -92,11 +86,15 @@ const Calendar = () => {
                <input
                   onChange={(e) => setFileImport(e.target.files[0])}
                   type="file"
+                  accept=".csv"
                   name="import"
                   id="import"
                   style={{ display: "none" }}
                />
-               <input type="button" name="export" value="Export *.csv" />
+               <button className="sendData" onClick={handelSendData}>
+                  Send {`${">>"}`}
+               </button>
+               {/* <input type="button" name="export" value="Export *.csv" /> */}
             </div>
             <div className="timetable">
                <div className="week-names">
@@ -144,7 +142,7 @@ const Calendar = () => {
                                     : "row-color-even"
                               }`}
                               data-row={index + 1}
-                              data-col="tus"
+                              data-col="tue"
                            ></div>
                            <div
                               className={`cell ${
@@ -162,7 +160,7 @@ const Calendar = () => {
                                     : "row-color-even"
                               }`}
                               data-row={index + 1}
-                              data-col="thus"
+                              data-col="thu"
                            ></div>
                            <div
                               className={`cell ${
@@ -171,7 +169,7 @@ const Calendar = () => {
                                     : "row-color-even"
                               }`}
                               data-row={index + 1}
-                              data-col="pri"
+                              data-col="fri"
                            ></div>
                            <div
                               className={`cell ${

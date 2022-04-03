@@ -1,6 +1,5 @@
-import logo from "./logo.svg";
+
 import "./App.scss";
-import Test from "./components/Test/Test";
 import Calendar from "./components/Calendar/Calendar";
 import Header from "./components/Header/Header";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";

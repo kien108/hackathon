@@ -2,14 +2,11 @@ import axiosClient from "./axiosClient";
 
 const postApi = {
    send: (data) => {
-      const url = "/request-send";
-      return axiosClient({
-         method: "post",
-         url: url,
+      const url = "/request";
+      return axiosClient.post(url, data, {
          headers: {
             "content-type": "multipart/form-data",
          },
-         data,
       });
    },
 };
